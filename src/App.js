@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const sample = [
-  { id: 0, title: 'sample', description: 'sample' },
-  { id: 1, title: 'sample1', description: 'sample2' },
-];
-
 function App() {
+  const initTodoList = [
+    { id: 0, title: 'sample', description: 'sample' },
+    { id: 1, title: 'sample1', description: 'sample11' },
+  ];
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [todoList, setTodoList] = useState(initTodoList);
 
   const changeTitle = (e) => {
-    setTitle(e.target.titleValue);
+    setTitle(e.target.value);
   };
 
   const changeDescription = (e) => {
-    setDescription(e.target.descriptionValue);
+    setDescription(e.target.value);
   };
 
   const clickBotton = () => {
-    console.log(title, description);
+    const newTodoList = todoList.slice();
+    newTodoList.push({ id: 2, title: title, description: description });
+    setTodoList(newTodoList);
+    console.log(todoList);
   };
 
   return (
@@ -27,15 +30,19 @@ function App() {
       <h1>TEST</h1>
       <div>
         {/* input */}
-        <input type="Text" titleValue={title} onChange={changeTitle}></input>
-        <textarea type="Text" descriptionValue={description} onChange={changeDescription}></textarea>
+        <div>
+          <input type="Text" value={title} onChange={changeTitle}></input>
+        </div>
+        <div>
+          <textarea type="Text" value={description} onChange={changeDescription}></textarea>
+        </div>
       </div>
       <div>
         {/* botton */}
         <button onClick={clickBotton}>botton</button>
       </div>
       {/* output */}
-      {sample.map((todo) => {
+      {todoList.map((todo) => {
         return (
           <div key={todo.id}>
             <span>{todo.title}</span>
